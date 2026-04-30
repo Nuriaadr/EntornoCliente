@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guerreros Z - Árbol Familiar</title>
+</head>
+
+
+<body>
+
+
+<h1>EL IMPERIO ROMANO</h1>
+<ul id="romanos"></ul>
+
+
+<script>
+const imperioRomanoJSON = {
+"emperadores": [
+{ "nombre": "Augusto", "hijos": ["Julia", "Gaius Caesar", "Lucius Caesar"] },
+{ "nombre": "Tiberio", "hijos": ["Druso Julio César", "Nerón Claudio"] },
+{ "nombre": "Calígula", "hijos": ["Julia Drusila", "Germanicus Minor", "Antonia"] },
+{ "nombre": "Claudio", "hijos": ["Británico", "Octavia", "Claudia Antonia"] },
+{ "nombre": "Nerón", "hijos": ["Claudia Augusta", "Lucio Domicio", "Julia"] },
+{ "nombre": "Vespasiano", "hijos": ["Tito", "Domiciano", "Flavia"] },
+{ "nombre": "Tito", "hijos": ["Julia Titi", "Tiberio"] },
+{ "nombre": "Domiciano", "hijos": ["Julia Domitilla", "Flavio César"] }
+]
+};
+
+
+//TIP: para crear un nodo li con un texto "Augusto"
+// const hijoLi = document.createElement("li");
+// hijoLi.textContent = "Augusto";
+//Se single si no existe nadie en el JSON ya sea padre o hijo con ese nombre. Solo en el hijo
+
+//importante. no hay que parsear el JSON porque ya es JSON no es un string
+const lista = document.getElementById("romanos"); //aquí lo que hago es que lista apunta donde voy a crear la lista
+const recuenta = (l, nombre) => {
+let cuantos = 0;
+l.map(e => {
+if (e.nombre == nombre) cuantos++
+cuantos += e.hijos.filter(f => f == nombre).length //utilizo filter para hacer el recuento más fácil.
+})
+if (cuantos < 2) return " (single)" //aquí se puede utilizar un ternario-> cuantos < 2?" (single)":""
+return "";
+}
+// Usamos map para recorrer y crear elementos del DOM
+imperioRomanoJSON.emperadores.map(personaje => {
+const padreLi = document.createElement("li");
+padreLi.textContent = personaje.nombre;
+//el padre es un li y lo referencio como padreLi para irle colgando los hijos
+
+const hijosUl = document.createElement("ul");
+//todos los hijos tendrán que estar dentro del ul anterior
+
+personaje.hijos.map(hijo => {
+const hijoLi = document.createElement("li");
+hijoLi.textContent = hijo + (recuenta(imperioRomanoJSON.emperadores, hijo));
+hijosUl.appendChild(hijoLi);
+//cada hijo es un li y lo engancho al ul hijosUL
+});
+
+//ahora ya solo me falta enganchar los hijos al padre
+padreLi.appendChild(hijosUl);
+//y el padre lo engancho a la lista (esta línea la podría haber puesto antes, quizás después de haber creado el objeto)
+lista.appendChild(padreLi);
+});
+
+//El código anterior lo puedo poner en una función o no. El recuento siempre será una función porque la voy a llamar muchas veces.
+</script>
+
+
+</body>
+
+
+</html>
