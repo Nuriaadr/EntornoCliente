@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='es'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>NOMBRES POPULARES</title>
+</head>
+
+<body>
+
+    <script>
+        const GODOS = ["Ataulfo", "Teudiselo", "Sisenando", "Sigérico", "Valia",
+            "Valia", "Valia", "Valia", "Valia", "Valia", "Teudiselo", "Sisenando", "Teodórico",
+            "Turismundo", "Éurico", "Alárico", "Gesalárico", "Amalárico", "Recaredo", "Vitérico",
+            "Sisebuto", "Suintila", "Sisenando", "Quintila", "Chindasvinto", "Recesvinto", "Vamba", "Ervigido", "Égica", "Vitiza", "Rodrigo"];
+
+        var uno = "";
+        var numuno = 0;
+        var dos = "";
+        var numdos = 0;
+        var tres = "";
+        var numtres = 0;
+
+        //ESCRIBE AQUÍ TU CÓDIGO
+
+        //Godos más votados 
+        // no usar bucles for o elseif
+        //no crear más variables o arrays solo map, filter, find
+
+        const hacerPodioGodos = (nombre, votos) => {
+            if (votos > numuno) {
+                numtres = numdos;
+                tres = dos;
+
+                dos = uno;
+                numdos = numuno;
+
+                numuno = votos;
+                uno = nombre;
+            }
+            if (votos > numdos && nombre !== uno) {
+
+                numtres = numdos;
+                tres = dos;
+
+                numdos = votos;
+                dos = nombre;
+            }
+            if (votos > numtres && nombre !== dos && nombre !== uno) {
+
+                numtres = votos;
+                tres = nombre;
+            }
+        }
+
+        GODOS.map(godo => {
+            hacerPodioGodos(godo, GODOS.filter(f => f === godo).length)
+        });
+
+        console.log("El rey Godo es: " + uno + " con " + numuno + " votos");
+        console.log("El escudero de armas es: " + dos + " con " + numdos + " votos");
+        console.log("El encargado de las atarazanas es: " + tres + " con " + numtres + " votos");
+
+    </script>
+
+</body>
+
+</html>
